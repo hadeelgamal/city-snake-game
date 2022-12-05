@@ -1,0 +1,48 @@
+#background-img {
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+}
+
+#container {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+#game-board {
+  /* position: absolute; */
+  display: none;
+}
+
+#final-screen {
+  display: none;
+}
+
+#splash-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+}
+
+#start-button {
+  background-color: rgb(67, 67, 193);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  text-transform: uppercase;
+  position: absolute;
+  margin-top: 70px;
+  border: none;
+  width: 200px;
+  height: 50px;
+}
+
+#title {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  position: absolute;
+  margin-bottom: 70px;
+}

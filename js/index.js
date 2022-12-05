@@ -1,50 +1,48 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-class CanvasBoard {
-  constructor() {}
+const currentBoard = new CanvasBoard();
+const cairoTram = new Tram();
 
-  startGame() {
-    // Add button with an event listener
-    // on click draw canvas and call method draw tramCar
-    // call the moveTram method
-    // call the addRandomPassenger
-   
-  }
 
-  drawTramCar() {
-    // generate a tram car on the canvas
-  }
-
-  moveTram() {
-    // move tram automatically, horizontal and vertical
-    // checks if tram pick up passengers if true add tram car and addRandomPassenger
-  }
-  addRandomPassenger() {
-    // recieves an array of passengers
-    // chooses one at random
-    // generate the one to the board
-  }
-
-  gameEnded() {
-    // checks if tram has collided with its body OR collided with the canvas
-  }
-
-  changeDirections() {
-    // Add document event listener on keydown
-    // switch case left right top bottom arrow
-  }
+class Passenger {
+    constructor() {
+        this.imagePath= "";
+        this.x = 0;
+        this.y = 0;
+    }
+    addGen() {
+        // adds a tram car to the array tramCars
+      }
 }
 
-class Tram {
-  constructor() {
-
-  }
-
-  addCar() {
-    // adds a tram car to the array tramCars
-  }
+const currentPassenger = new Passenger();
 
 
-  
+document.getElementById("start-button").onclick = () => {
+  startGame();
+  setInterval(updateGame, 1000);
+};
+
+function startGame() {
+  document.getElementById("game-board").style.display = "block";
+  document.getElementById("splash-container").style.display = "none";
+
+  currentBoard.drawBackgroundImage();
+  currentBoard.drawTramCar(cairoTram.tramCars);
+  currentBoard.addRandomPassenger(currentPassenger);
+
+  // call the moveTram method
+  // call the addRandomPassenger
 }
+function updateGame() {
+  ctx.clearRect(0, 0, 500, 500);
+  currentBoard.reDrawBackground();
+  currentBoard.drawTramCar(cairoTram.tramCars);
+  currentBoard.moveTram(cairoTram.tramCars);
+  currentBoard.drawPassenger(currentPassenger);
+}
+//   function updateCanvas() {
+//
+
+// }
