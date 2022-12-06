@@ -18,23 +18,23 @@ document.addEventListener("keydown", (event) => {
   console.log("event keyCode", event.keyCode);
   switch (event.keyCode) {
     case 37:
-      currentBoard.moveLeft();
+      cairoTram.moveLeft();
       break;
     case 39:
-      currentBoard.moveRight();
+      cairoTram.moveRight();
       break;
     case 38:
-      currentBoard.moveUp();
+      cairoTram.moveUp();
       break;
     case 40:
-      currentBoard.moveDown();
+      cairoTram.moveDown();
       break;
   }
 });
 
 document.getElementById("start-button").onclick = () => {
   startGame();
-  setInterval(updateGame, 2200);
+  setInterval(updateGame, 200);
 };
 
 function startGame() {
@@ -48,11 +48,11 @@ function startGame() {
   // document.addEventListener("keydown", currentBoard.changeDirections);
 }
 function updateGame() {
-  if (currentBoard.gameEnded(cairoTram.tramCars)) return;
-  changing_direction = false;
+  // if (currentBoard.gameEnded(cairoTram.tramCars)) return;
+  // changing_direction = false;
   ctx.clearRect(0, 0, 500, 500);
   currentBoard.reDrawBackground();
   currentBoard.drawTramCar(cairoTram.tramCars);
-  currentBoard.moveTram(cairoTram.tramCars);
+  cairoTram.moveTram();
   currentBoard.drawPassenger(currentPassenger);
 }
