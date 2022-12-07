@@ -1,15 +1,3 @@
-function selectTramImage(direction) {
-  if (direction === "right") {
-    return "images/tram-right.png";
-  } else if (direction === "left") {
-    return "images/tram-left.png";
-  } else if (direction === "up") {
-    return "images/tram-up.png";
-  } else if (direction === "down") {
-    return "images/tram-down.png";
-  }
-}
-
 class Tram {
   constructor() {
     this.tramDirection = "right";
@@ -22,7 +10,7 @@ class Tram {
     this.moveTram();
   }
 
-   moveTram(has_eaten) {
+  moveTram(has_eaten) {
     const head = {
       x: this.tramCars[0].x + this.dx,
       y: this.tramCars[0].y + this.dy,
@@ -35,24 +23,26 @@ class Tram {
     }
   }
   moveLeft() {
+    this.tramDirection = "left";
     this.dx -= 50;
     this.dy = 0;
   }
   moveRight() {
+    this.tramDirection = "right";
+
     this.dx += 50;
     this.dy = 0;
   }
   moveUp() {
+    this.tramDirection = "up";
+
     this.dx = 0;
     this.dy -= 50;
-    // ctx.translate(this.tramCars[0].x + 100/ 2, this.tramCars[0].y + 60 / 2);
-    // ctx.rotate(Math.PI / 2);
   }
   moveDown() {
+    this.tramDirection = "down";
+
     this.dx = 0;
     this.dy += 50;
-  }
-  addCar() {
-    // adds a tram car to the array tramCars
   }
 }

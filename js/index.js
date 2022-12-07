@@ -1,5 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 const currentBoard = new CanvasBoard();
 const cairoTram = new Tram();
@@ -16,71 +18,112 @@ class Passenger {
 }
 const currentPassenger = new Passenger();
 
+let intervalID;
+
 document.addEventListener("keydown", (event) => {
   switch (event.keyCode) {
     case 37:
       if (
-        cairoTram.tramDirection === "left" ||
-        cairoTram.tramDirection === "right"
-      )
-        return;
-      cairoTram.moveLeft();
-      cairoTram.tramDirection = "left";
+        cairoTram.tramDirection !== "right" &&
+        cairoTram.tramDirection !== "left"
+      ) {
+        cairoTram.moveLeft();
+      }
       break;
     case 39:
       if (
-        cairoTram.tramDirection === "left" ||
-        cairoTram.tramDirection === "right"
-      )
-        return;
-      cairoTram.moveRight();
-      cairoTram.tramDirection = "right";
+        cairoTram.tramDirection !== "left" &&
+        cairoTram.tramDirection !== "right"
+      ) {
+        cairoTram.moveRight();
+      }
 
       break;
     case 38:
       if (
-        cairoTram.tramDirection === "up" ||
-        cairoTram.tramDirection === "down"
-      )
-        return;
-      cairoTram.moveUp();
-      cairoTram.tramDirection = "up";
+        cairoTram.tramDirection !== "down" &&
+        cairoTram.tramDirection !== "up"
+      ) {
+        cairoTram.moveUp();
+      }
 
       break;
     case 40:
       if (
-        cairoTram.tramDirection === "up" ||
-        cairoTram.tramDirection === "down"
-      )
-        return;
-      cairoTram.moveDown();
-      cairoTram.tramDirection = "down";
-
+        cairoTram.tramDirection !== "up" &&
+        cairoTram.tramDirection !== "down"
+      ) {
+        cairoTram.moveDown();
+      }
       break;
   }
 });
 
+window.addEventListener("resize", resizeCanvas, false);
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  
+  drawStuff();
+}
+
+function drawStuff() {
+  currentBoard.drawTramCar(cairoTram.tramCars);
+  cairoTram.moveTram(currentBoard.has_eaten);
+  currentBoard.drawPassenger(currentPassenger);
+}
+
 document.getElementById("start-button").onclick = () => {
   startGame();
-  setInterval(updateGame, 800);
+  intervalID = setInterval(updateGame, 400);
 };
 
 function startGame() {
   document.getElementById("game-board").style.display = "block";
-  document.getElementById("splash-container").style.display = "none";
-  const tramImageSrc = selectTramImage(cairoTram.tramDirection);
-  currentBoard.drawBackgroundImage();
-  currentBoard.drawTramCar(cairoTram.tramCars, tramImageSrc);
+  document.getElementById("start-button").style.display = "none";
+  document.getElementById("title").style.display = "none";
+  document.getElementById("instructions").style.display = "none";
+
+  
+  currentBoard.drawTramCar(cairoTram.tramCars);
   currentBoard.addRandomPassenger(currentPassenger);
 }
 function updateGame() {
-  if (currentBoard.gameEnded(cairoTram.tramCars)) return;
-  // changing_direction = false;
-  const tramImageSrc = selectTramImage(cairoTram.tramDirection);
-  ctx.clearRect(0, 0, 500, 500);
-  currentBoard.reDrawBackground();
-  currentBoard.drawTramCar(cairoTram.tramCars, tramImageSrc);
+  if (currentBoard.gameEnded(cairoTram.tramCars)) {
+    stopGame();
+    console.log("stopgame");
+
+    return;
+  }
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  currentBoard.drawTramCar(cairoTram.tramCars);
   cairoTram.moveTram(currentBoard.has_eaten);
   currentBoard.drawPassenger(currentPassenger);
   currentBoard.pickUpPassenger(currentPassenger, cairoTram);
+  currentBoard.updateScore();
 }
+
+document.addEventListener("keydown", (event) => {
+  if (event.keyCode == 32) {
+    stopGame();
+  }
+});
+
+function stopGame() {
+  clearInterval(intervalID);
+  document.getElementById("reset-button").style.display = "block";
+  let message = "GAME OVER";
+  ctx.font = "60px serif";
+  ctx.fillStyle = "black";
+  ctx.fillText(message, 500, 350);
+  console.log("message:", message);
+}
+
+document.getElementById("reset-button").onclick = () => {
+  startGame();
+  console.log("reset game works");
+ intervalID = setInterval(updateGame, 400);
+};
