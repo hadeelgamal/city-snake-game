@@ -70,8 +70,8 @@ class CanvasBoard {
     let randoNumber = Math.floor(Math.random() * 10);
     let imageUrl = passengersArr[randoNumber];
 
-    let randoX = Math.floor(Math.random() * 500);
-    let randoY = Math.floor(Math.random() * 500);
+    let randoX = Math.floor(Math.random() * (this.width - 300));
+    let randoY = Math.floor(Math.random() * (this.height - 300));
 
     currentPassenger.imagePath = imageUrl;
     currentPassenger.x = randoX;
@@ -93,10 +93,10 @@ class CanvasBoard {
   }
 
   gameEnded(tramCars) {
-    const hitLeftWall = tramCars[0].x == 0;
-    const hitRightWall = tramCars[0].x + 50 >= this.width;
-    const hitToptWall = tramCars[0].y <= 0;
-    const hitBottomWall = tramCars[0].y + 50 == this.height;
+    const hitLeftWall = tramCars[0].x < 0;
+    const hitRightWall = tramCars[0].x + 50 > this.width;
+    const hitToptWall = tramCars[0].y < 0;
+    const hitBottomWall = tramCars[0].y + 50 > this.height;
     return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
   }
 }
