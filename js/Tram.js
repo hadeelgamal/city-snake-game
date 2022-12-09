@@ -1,7 +1,7 @@
 class Tram {
   constructor() {
     this.tramDirection = "right";
-    this.dx = 50;
+    this.dx = 40;
     this.dy = 0;
     this.tramCars = [
       { x: 200, y: 200 },

@@ -24,7 +24,6 @@ class CanvasBoard {
     this.height = canvas.height;
   }
 
-  
   drawTramCar(tramCars) {
     tramImage.src = this.tramImg;
     tramImage.addEventListener("load", () => {
@@ -37,17 +36,21 @@ class CanvasBoard {
   pickUpPassenger(currentPassenger, tram) {
     let xCollide = checkEpsilon(tram.tramCars[0].x, currentPassenger.x, 60);
     let yCollide = checkEpsilon(tram.tramCars[0].y, currentPassenger.y, 60);
-    
+
     console.log("epslionTest:", xCollide, yCollide);
-    
 
     this.has_eaten =
-      tram.tramCars[0].x <= currentPassenger.x  &&
-      tram.tramCars[0].y <= currentPassenger.y  &&
-      (xCollide && yCollide);
-    console.log("eatenStatus:",this.has_eaten);
+      tram.tramCars[0].x <= currentPassenger.x &&
+      tram.tramCars[0].y <= currentPassenger.y &&
+      xCollide &&
+      yCollide;
+    console.log("eatenStatus:", this.has_eaten);
     if (this.has_eaten) {
-      console.log("currentPassengerStatus:",currentPassenger.x, currentPassenger.y);
+      console.log(
+        "currentPassengerStatus:",
+        currentPassenger.x,
+        currentPassenger.y
+      );
       console.log("firstTramStatus:", tram.tramCars[0].x, tram.tramCars[0].y);
 
       this.score += 10;
@@ -58,12 +61,12 @@ class CanvasBoard {
     }
   }
 
-   updateScore() {
-    let score = this.score; 
-    ctx.font = '18px serif';
-    ctx.fillStyle = 'black';
+  updateScore() {
+    let score = this.score;
+    ctx.font = "18px serif";
+    ctx.fillStyle = "black";
     ctx.fillText(`Score: ${score}`, 650, 50);
-    console.log("score:",score);
+    console.log("score:", score);
   }
 
   addRandomPassenger(currentPassenger) {
@@ -94,9 +97,9 @@ class CanvasBoard {
 
   gameEnded(tramCars) {
     const hitLeftWall = tramCars[0].x < 0;
-    const hitRightWall = tramCars[0].x + 50 > this.width;
+    const hitRightWall = tramCars[0].x + 40 == this.width;
     const hitToptWall = tramCars[0].y < 0;
-    const hitBottomWall = tramCars[0].y + 50 > this.height;
+    const hitBottomWall = tramCars[0].y + 40 >= this.height;
     return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall;
   }
 }

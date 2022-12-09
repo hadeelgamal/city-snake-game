@@ -104,9 +104,6 @@ document.getElementById("start-button").onclick = () => {
 
 document.addEventListener("keydown", (event) => {
   switch (event.keyCode) {
-    case 32:
-      stopGame();
-      break;
     case 37:
       if (
         cairoTram.tramDirection !== "right" &&
